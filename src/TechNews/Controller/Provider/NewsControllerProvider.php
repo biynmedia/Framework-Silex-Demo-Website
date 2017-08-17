@@ -12,6 +12,7 @@ class NewsControllerProvider implements ControllerProviderInterface {
      */
     public function connect(\Silex\Application $app)
     {
+        
         # : Créer une instance de Silex\ControllerCollection
         # : https://silex.symfony.com/api/master/Silex/ControllerCollection.html
         $controllers = $app['controllers_factory'];

@@ -1,14 +1,27 @@
 <?php
 namespace TechNews\Controller;
 
+use Silex\Application;
+
 class NewsController
 {
     /**
      * Affichage de la Page d'Accueil
      * @return Symfony\Component\HttpFoundation\Response;
      */
-    public function indexAction() {
-        return '<h1>Accueil</h1>';
+    public function indexAction(Application $app) {
+        
+        # Connexion à la BDD & Récupération des Articles
+        $articles = $app['db']->fetchAll('SELECT * FROM view_articles');
+        
+        # Récupération des Articles en Spotlight
+        $spotlight = $app['db']->fetchAll('SELECT * FROM view_articles WHERE SPOTLIGHTARTICLE = 1');
+       
+        # Affichage dans la Vue
+        return $app['twig']->render('index.html.twig',[
+            'articles'  => $articles,
+            'spotlight' => $spotlight
+        ]);
     }
     
     /**

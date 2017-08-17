@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block seodescription '' %}">
+    <meta name="author" content="Hugo LIEGEARD">
+    <title>{% block title '' %} - TechNews</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <!--preload-->
+    <div class="loader" id="page-loader">
+        <div class="loading-wrapper"></div>
+    </div>
+
+    <!-- Menu du Site -->
+    {% include 'inc/menu.html' %}
+
+    <!-- Contenu du Site -->
+    {% block contenu %}{% endblock %}
+
+    <!-- Pied de Page -->
+    {% include 'inc/footer.html' %}
+
+    <!-- Block pour Javascripts -->
+    {% block javascripts %}{% endblock %}
+    
+</body>
+</html>
