@@ -16,7 +16,8 @@
     </div>
 
     <!-- Menu du Site -->
-    {% include 'inc/menu.html' %}
+    {# https://silex.symfony.com/doc/2.0/providers/twig.html#rendering-a-controller #}
+    {{ render(controller('TechNews\\Controller\\NewsController::menu')) }}
 
     <!-- Contenu du Site -->
     {% block contenu %}{% endblock %}

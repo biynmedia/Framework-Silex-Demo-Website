@@ -24,7 +24,10 @@
                             </div>
                             <div class="spotlight-item-caption">
                                 <h2 class="font-heading">
-                                    <a href="#">
+                                    <a href="{{ url('technews_article', {
+                                    libellecategorie : article.LIBELLECATEGORIE | lower,
+                                    slugarticle : article.TITREARTICLE | slug,
+                                    idarticle : article.IDARTICLE }) }}">
                                         {{ article.TITREARTICLE }}
                                     </a>
                                 </h2>
@@ -37,7 +40,7 @@
                                         {{ article.DATECREATIONARTICLE }}
                                     </span>
                                 </div>
-                                {# Accroche à faire via un filtre Twig #}
+                                {{ article.CONTENUARTICLE | accroche }}
                             </div>
                         </article>
                     </div>
@@ -51,12 +54,18 @@
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <div class="spotlight-item-thumb">
                                 <div class="spotlight-item-thumb-img">
-                                    <a href="#">
+                                    <a href="{{ url('technews_article', {
+                                    libellecategorie : article.LIBELLECATEGORIE | lower,
+                                    slugarticle : article.TITREARTICLE | slug,
+                                    idarticle : article.IDARTICLE }) }}">
                                         <img alt="{{ article.TITREARTICLE }}" src="{{ asset('assets/images/product/'~article.FEATUREDIMAGEARTICLE) }}" />
                                     </a>
                                     <a href="#" class="cate-tag">{{ article.LIBELLECATEGORIE }}</a>
                                 </div>
-                                <h3><a href="#">{{ article.TITREARTICLE }}</a></h3>
+                                <h3><a href="{{ url('technews_article', {
+                                    libellecategorie : article.LIBELLECATEGORIE | lower,
+                                    slugarticle : article.TITREARTICLE | slug,
+                                    idarticle : article.IDARTICLE }) }}">{{ article.TITREARTICLE }}</a></h3>
                                 <div class="meta-post">
                                     <a href="#">
                                         {{ article.PRENOMAUTEUR }} {{ article.NOMAUTEUR }}
@@ -73,6 +82,6 @@
             </section>
         </div>
 
-    {% include 'inc/sidebar.html' %}
+    {{ render(controller('TechNews\\Controller\\NewsController::sidebar')) }}
     
     {% endblock %}

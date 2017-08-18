@@ -1,0 +1,76 @@
+{% extends 'layout.html.twig' %}
+
+{# Block de title défini dans base.html.twig #}
+
+    {% block title %} {{categorie | capitalize}} {% endblock %}
+
+{# Block de Contenu défini dans base.html.twig #}
+
+    {% block contenu %}
+        <div class="row">
+            <!--colleft-->
+            <div class="col-md-8 col-sm-12">
+            {# https://twig.symfony.com/doc/2.x/tests/empty.html#empty #}
+            {% if articles is not empty %}
+                <div class="box-caption">
+                    <span>
+                        {{ categorie }} 
+                        {# Autre possibilité : global.request.get('libellecategorie') #}
+                        {# https://silex.symfony.com/doc/2.0/providers/twig.html#global-variable #}
+                    </span>
+                </div>
+                <!--list-news-cate-->
+                <div class="list-news-cate">
+                    {% for article in articles %}
+                            <article class="news-cate-item">
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5 col-xs-12">
+                                        <a href="{{ url('technews_article', {
+                                    libellecategorie : article.LIBELLECATEGORIE | lower,
+                                    slugarticle : article.TITREARTICLE | slug,
+                                    idarticle : article.IDARTICLE }) }}">
+                                            <img alt="{{ article.TITREARTICLE }}" src="{{ asset('assets/images/product/'~article.FEATUREDIMAGEARTICLE) }}" class="img-responsive" />
+                                        </a>
+                                    </div>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <h3><a href="{{ url('technews_article', {
+                                    libellecategorie : article.LIBELLECATEGORIE | lower,
+                                    slugarticle : article.TITREARTICLE | slug,
+                                    idarticle : article.IDARTICLE }) }}">{{ article.TITREARTICLE }}</a></h3>
+                                        <div class="meta-post">
+                                            <a href="#">
+                                                {{ article.PRENOMAUTEUR }} {{ article.NOMAUTEUR }}
+                                            </a>
+                                            <em></em>
+                                            <span>
+                                                {{ article.DATECREATIONARTICLE }}
+                                            </span>
+                                        </div>
+                                        {{ article.CONTENUARTICLE | accroche }}
+                                    </div>
+                                </div>
+                            </article>
+                    {% endfor %}
+                </div>
+
+                <!-- <div class="paging">
+                    <a href="#">Prev</a>
+                    <a href="#" class="current">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">Next</a>
+                </div> -->
+                
+                {% else %}
+                    <p><strong>Aucune publication pour le moment.</strong></p>
+                {% endif %}
+
+            </div>
+            
+        {{ render(controller('TechNews\\Controller\\NewsController::sidebar')) }}
+    
+    </div>
+
+{% endblock %}
