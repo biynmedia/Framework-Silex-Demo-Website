@@ -4,9 +4,13 @@
 
     {% block title %} Accueil {% endblock %}
 
+{#  Fil d'Ariane #}
+    {% set active = 'accueil' %}
+
 {# Block de Contenu défini dans base.html.twig #}
 
     {% block contenu %}
+
         <div class="row">
         <!--colleft-->
         <div class="col-md-8 col-sm-12">

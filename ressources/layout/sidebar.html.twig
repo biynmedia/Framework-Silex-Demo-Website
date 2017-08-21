@@ -1,5 +1,24 @@
 <!--colright-->
 <div class="col-md-4 col-sm-12">
+
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+		<h3 class="text-center">Bonjour {{ app.user.PRENOMAUTEUR }}</h3>
+		<h4 class="text-center">
+			{% if is_granted('ROLE_ADMIN') %}Administrateur{% else %}Auteur{% endif %}
+		</h4>
+
+		<ul class="list-group">
+			<li class="list-group-item">
+				<a href="{{ url('technews_addarticle') }}">Ajouter un Article</a>
+			</li>
+			<li class="list-group-item">
+				<a href="{{ url('technews_deconnexion') }}">Déconnexion</a>
+			</li>
+		</ul>
+
+	{% endif %}
+
 	<!--tab popular-->
 	<ul role="tablist" class="tab-popular">
 		<li class="active">

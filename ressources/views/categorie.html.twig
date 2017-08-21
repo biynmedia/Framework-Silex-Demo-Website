@@ -4,6 +4,9 @@
 
     {% block title %} {{categorie | capitalize}} {% endblock %}
 
+{# Fil d'Ariane #}
+{% set active = categorie | capitalize %}
+
 {# Block de Contenu défini dans base.html.twig #}
 
     {% block contenu %}

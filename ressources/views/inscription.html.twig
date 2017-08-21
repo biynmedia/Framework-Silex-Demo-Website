@@ -1,0 +1,56 @@
+{% extends 'layout.html.twig' %}
+
+{# Block de title défini dans base.html.twig #}
+{% block title %} Inscription {% endblock %}
+
+{# Fil d'Ariane #}
+{% set active = 'inscription' %}
+
+{# Block de Contenu défini dans base.html.twig #}
+{% block contenu %}
+    <!-- .row>.col-xs-6.col-xs-push-3 -->
+    <div class="row">
+        <div class="col-xs-6 col-xs-push-3">
+            <h2 class="text-center">Inscription d'un Membre</h2 >
+            <form action="{{ path('technews_inscription_post') }}" class="form-horizontal" method="post">
+                
+                <!-- Prénom et Nom -->
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <input name="PRENOMAUTEUR" required class="form-control" 
+                            type="text" placeholder="Saisissez votre Prénom">
+                    </div>
+                    <div class="col-xs-6">
+                        <input name="NOMAUTEUR" required class="form-control" 
+                            type="text" placeholder="Saisissez votre Nom">
+                    </div>
+                </div>
+                
+                <!-- Email et Mot de Passe -->
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <input name="EMAILAUTEUR" required class="form-control" 
+                            type="email" placeholder="Saisissez votre Email">
+                    </div>
+                    <div class="col-xs-6">
+                        <input name="MDPAUTEUR" required class="form-control" 
+                            type="password" placeholder="*********">
+                    </div>
+                </div>
+
+                <!-- Role du Membre pour les droits d'accès -->
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <select name="ROLE)AUTEUR" class="form-control">
+                            <option value="ROLE_AUTEUR" selected>ROLE_AUTEUR</option>
+                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-block btn-primary" value="M'inscrire">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

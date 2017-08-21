@@ -5,7 +5,8 @@
         "symfony/twig-bridge": "^3.3",
         "symfony/asset": "^3.3",
         "doctrine/dbal": "~2.2",
-        "j4mie/idiorm": "^1.5"
+        "j4mie/idiorm": "^1.5",
+        "symfony/security": "^3.3"
     },
     
     "autoload" : {

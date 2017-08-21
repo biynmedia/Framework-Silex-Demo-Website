@@ -17,7 +17,7 @@
 
     <!-- Menu du Site -->
     {# https://silex.symfony.com/doc/2.0/providers/twig.html#rendering-a-controller #}
-    {{ render(controller('TechNews\\Controller\\NewsController::menu')) }}
+    {{ render(controller('TechNews\\Controller\\NewsController::menu', {'active' : active} )) }}
 
     <!-- Contenu du Site -->
     {% block contenu %}{% endblock %}

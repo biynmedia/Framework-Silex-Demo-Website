@@ -2,9 +2,9 @@
 <nav class="menu-res hidden-lg hidden-md ">
 	<div class="menu-res-inner">
 		<ul>
-			<li><a href="{{ url('technews_home') }}">Accueil</a></li>
+			<li {% if 'accueil' == active %}class="current"{% endif %}><a href="{{ url('technews_home') }}">Accueil</a></li>
 			{% for categorie in categories %}
-				<li><a href="{{ url('technews_categorie', {libellecategorie: categorie.LIBELLECATEGORIE | lower}) }}">{{ categorie.LIBELLECATEGORIE }}</a></li>
+				<li {% if categorie.LIBELLECATEGORIE == active %}class="current"{% endif %}><a href="{{ url('technews_categorie', {libellecategorie: categorie.LIBELLECATEGORIE | lower}) }}">{{ categorie.LIBELLECATEGORIE }}</a></li>
         	{% endfor %}
 		</ul>
 	</div>
@@ -28,10 +28,15 @@
 				<span>MENU</span>
 			</div>
 			<ul class="hidden-sm hidden-xs">
-				<li><a href="{{ url('technews_home') }}">Accueil</a></li>
+				<li {% if 'accueil' == active %}class="current"{% endif %}><a href="{{ url('technews_home') }}">Accueil</a></li>
 				{% for categorie in categories %}
-					<li><a href="{{ url('technews_categorie', {libellecategorie: categorie.LIBELLECATEGORIE | lower}) }}">{{ categorie.LIBELLECATEGORIE }}</a></li>
+					<li {% if categorie.LIBELLECATEGORIE == active %}class="current"{% endif %}><a href="{{ url('technews_categorie', {libellecategorie: categorie.LIBELLECATEGORIE | lower}) }}">{{ categorie.LIBELLECATEGORIE }}</a></li>
 				{% endfor %}
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<li><a href="{{ url('technews_deconnexion') }}">Déconnexion</a></li>
+				{% else %}
+					<li><a href="{{ url('technews_connexion') }}">Connexion</a></li>
+				{% endif %}
 			</ul>
 			<div class="search-icon">
 				<div class="search-icon-inner">

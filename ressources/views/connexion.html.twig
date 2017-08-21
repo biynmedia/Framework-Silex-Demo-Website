@@ -1,0 +1,53 @@
+{% extends 'layout.html.twig' %}
+
+{# Block de title défini dans base.html.twig #}
+{% block title %} Connexion {% endblock %}
+
+{# Fil d'Ariane #}
+{% set active = 'connexion' %}
+
+{# Block de Contenu défini dans base.html.twig #}
+{% block contenu %}
+    <!-- .row>.col-xs-6.col-xs-push-3 -->
+    <div class="row">
+        <div class="col-xs-6 col-xs-push-3">
+            <h2 class="text-center">Connexion</h2 >
+
+            {% if error %}
+                <div class="alert alert-danger">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    {{ error | replace({"Bad credentials." : " Identifiants et/ou mot de passe incorrect."}) }}
+                </div>
+            {% endif %}
+
+            {% if global.request.get('inscription') == 'success' %}
+                <div class="alert alert-success">
+                    <p><i class="fa fa-thumbs-up" aria-hidden="true"></i> 
+                    Félicitation, votre inscription est effective. 
+                        <br>Vous pouvez maintenant vous connecter.</p>
+                </div>
+            {% endif %}
+
+            <form action="{{ url('connexion_login_check') }}" class="form-horizontal" method="post">
+
+                <!-- Email et Mot de Passe -->
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input name="_username" value="{{ last_username }}" required class="form-control" 
+                            type="email" placeholder="Saisissez votre Email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input name="_password" required class="form-control" 
+                            type="password" placeholder="*********">
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-block btn-primary" value="Connexion">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
