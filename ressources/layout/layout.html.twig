@@ -32,4 +32,106 @@
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>    
+        // -- Initialisation de jQuery
+        $(function() {
+            // -- jQuery est prêt à travailler.
+            console.log('jQuery is ready !');
+
+            /**
+            * Validate email function with regualr expression
+            * 
+            * If email isn't valid then return false
+            * 
+            * @param email
+            * @return Boolean
+            */
+            function validateEmail(email){
+                var emailReg = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+                var valid = emailReg.test(email);
+
+                if(!valid) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            // -- 1. Ecoute le Formulaire Newsletter pour savoir a quel moment il est soumis
+            $('#newsletterForm').on('submit', function(event) {
+
+                // -- Stop la propagation du submit
+                event.preventDefault();
+
+                // -- 2. Récupération des champs à vérifier
+                prenom  = $('#prenom');
+                email   = $('#email');
+                erreurs = [];
+
+                // -- 2.b Réinitialisation des Erreurs
+                $('#newsletterForm .alert').remove();
+
+                // -- 3. Vérifier que le prénom à bien été saisie
+                if(prenom.val().length == 0) {
+                    erreurs.push('Vous devez saisir votre Prénom');
+                }
+
+                // -- 4. Vérifier si l'adresse email est correct
+                if(!validateEmail(email.val())) {
+                    erreurs.push('Vérifiez votre Email');
+                }
+
+                // -- Affichage dans la console
+                console.log(erreurs);
+
+                if(erreurs.length == 0) {
+
+                    // -- Pas d'erreur, je peux persister
+                    $.ajax({
+                        url  : "{{ url('newsletter_ajax') }}",
+                        type : "POST",
+                        data : {
+                            EMAILNEWSLETTER     : email.val(),
+                            CONTACTNEWSLETTER   : prenom.val()
+                        }
+                    }).done(function(data) {
+                        console.log(data);
+                        if(data.response) {
+                            $('#newsletterForm').replaceWith($(`
+                                <div class="alert alert-success">
+                                    <strong>
+                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                        <br>Merci !
+                                    </strong>
+                                    <br>Votre inscription est validée.
+                                </div>
+                            `))
+                        } else {
+                            $(`
+                                <div class="alert alert-warning">
+                                    <strong>
+                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+                                        Attention !
+                                    </strong><br>Vous êtes déjà inscrit.
+                                </div>
+                            `).prependTo($('#newsletterForm')).delay(3000).fadeOut();
+                            // -- On Réinitialise le Formulaire
+                            $('#newsletterForm').get(0).reset();
+                        }
+                    })
+
+                } else {
+                    $(`
+                        <div class="alert alert-warning">
+                            <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Attention !</strong><br>
+                            ${ erreurs }
+                        </div>
+                    `).prependTo($('#newsletterForm'));
+                }
+
+            });
+
+
+        });
+    </script>
 {% endblock %}

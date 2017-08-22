@@ -10,7 +10,7 @@
 
 		<ul class="list-group">
 			<li class="list-group-item">
-				<a href="{{ url('technews_addarticle') }}">Ajouter un Article</a>
+				<a href="{{ url('technews_addarticle') }}">Créer un Article</a>
 			</li>
 			<li class="list-group-item">
 				<a href="{{ url('technews_deconnexion') }}">Déconnexion</a>
@@ -62,8 +62,12 @@
 	<div class="subcribe-box">
 		<h3>NEWSLETTER</h3>
 		<p>Inscrivez-vous pour recevoir nos dernières publications.</p>
-		<input type="text" placeholder="Votre Email..." />
-		<button class="my-btn">Je m'inscris</button>
+		<form id="newsletterForm" novalidate>
+			<input type="text" id="prenom" placeholder="Votre Prénom...">
+			<input type="text" id="email"  placeholder="Votre Email..." 
+				style="margin-top:0;" />
+			<button class="my-btn">Je m'inscris</button>
+		</form>
 	</div>
 	<!-- connect us-->
 	<div class="connect-us">

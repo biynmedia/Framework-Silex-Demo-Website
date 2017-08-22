@@ -34,6 +34,7 @@ class NewsController
         # Connexion à la BDD et la Récupération des Articles de la Catégorie
         $articles = $app['idiorm.db']->for_table('view_articles')
                                      ->where('LIBELLECATEGORIE', ucfirst($libellecategorie))
+                                     ->order_by_desc('IDARTICLE')
                                      ->find_result_set();
         
         # Transmission à la Vue
@@ -176,6 +177,44 @@ class NewsController
         $app['session']->clear();
         # On le redirige sur l'url de notre choix
         return $app->redirect( $app['url_generator']->generate('technews_home') ); 
+    }
+    
+    /**
+     * Traitement des données du Formulaire Newsletter
+     * @param Application $app
+     * @param Request $request
+     */
+    public function newsletterAjax(Application $app, Request $request) {
+        
+        if($request->isMethod('POST')) :
+                
+            # Vérification si l'adresse email existe en BDD
+            $isMailInDb = $app['idiorm.db']->for_table('newsletter')
+                ->where('EMAILNEWSLETTER', $request->get('EMAILNEWSLETTER'))
+                ->count();
+        
+            if(!$isMailInDb) :
+                
+                # Elle n'existe pas donc on l'ajout à notre BDD
+                $news = $app['idiorm.db']->for_table('newsletter')->create();
+                $news->EMAILNEWSLETTER      = $request->get('EMAILNEWSLETTER');
+                $news->CONTACTNEWSLETTER    = $request->get('CONTACTNEWSLETTER');
+                $news->save();
+                
+                # On renvoi une réponse : true
+                $result = ['response' => true];
+                
+            else :
+            
+                # L'adresse email existe déjà, on renvoi false
+                $result = ['response' => false];
+            
+            endif;
+            
+            return $app->json($result);            
+        
+        endif;
+        
     }
     
 }

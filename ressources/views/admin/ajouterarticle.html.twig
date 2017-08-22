@@ -1,0 +1,114 @@
+{% extends 'layout.html.twig' %}
+
+{# Block de title défini dans base.html.twig #}
+{% block title %} Ajouter un Article {% endblock %}
+
+{#  Fil d'Ariane #}
+{% set active = '' %}
+
+{# Block de Contenu défini dans base.html.twig #}
+{% block contenu %}
+    
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+            <form class="form-horizontal" enctype="multipart/form-data" method="POST">
+                <h3>Ajouter un Article</h3>
+
+                <!-- Titre de l'Article -->
+                <div class="form-group">
+					<label class="col-md-3 control-label">Titre de l'Article</label>
+					<div class="col-md-7">
+						{{ form_row(form.TITREARTICLE) }}
+					</div>
+				</div>
+
+                <!-- Auteur de l'Article -->
+                <div class="form-group">
+					<label class="col-md-3 control-label">Auteur</label>
+					<div class="col-md-7">
+						{{ form_row(form.IDAUTEUR) }}
+					</div>
+				</div>
+
+                <!-- Catégorie de l'Article -->
+                <div class="form-group">
+					<label class="col-md-3 control-label">Catégorie</label>
+					<div class="col-md-7">
+						{{ form_row(form.IDCATEGORIE) }}
+					</div>
+				</div>
+
+                <!-- Contenu de l'Article -->
+                <div class="form-group">
+					<label class="col-md-3 control-label">Description</label>
+					<div class="col-md-7">
+						{{ form_row(form.CONTENUARTICLE) }}
+					</div>
+				</div>
+
+                <!-- Featured Image (File) -->
+                <div class="form-group">
+					<label class="col-md-3 control-label">
+                        Featured Image <em>(Image à la Une)</em>
+                    </label>
+					<div class="col-md-7">
+						{{ form_row(form.FEATUREDIMAGEARTICLE) }}
+					</div>
+				</div>
+
+                <!-- Options (SPECIAL et SPOTLIGHT) -->
+                <div class="form-group">
+					<label class="col-md-3 control-label">Options</label>
+					<div class="col-md-7">
+						<div class="checkbox">
+                            <label>
+                                {{ form_row(form.SPECIALARTICLE) }}
+                                Spécial
+                            </label>
+                            <label>
+                                {{ form_row(form.SPOTLIGHTARTICLE) }}
+                                Spotlight
+                            </label>
+                        </div>
+					</div>
+				</div>
+                
+                {# Important pour la validation du Token #}
+                {# https://stackoverflow.com/questions/23455780/the-csrf-token-is-invalid-please-try-to-resubmit-the-form #}
+                {{ form_row(form._token) }}
+
+                <!-- Submit -->
+                <div class="form-group">
+					<div class="col-xs-7 col-xs-offset-3">
+						<button type="submit" class="btn btn-primary" value="Publier">
+							Publier</button>
+					</div>
+				</div>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha256-AWdeVMUYtwLH09F6ZHxNgvJI37p+te8hJuSMo44NVm0=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdn.ckeditor.com/4.7.2/standard/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha256-SUaao5Q7ifr2twwET0iyXVy0OVnuFJhGVi5E/dqEiLU=" crossorigin="anonymous"></script>
+    <script>
+        CKEDITOR.replace('form_CONTENUARTICLE');
+        $('.dropify').dropify({
+                messages: {
+                    default: 'Glissez-d&eacute;posez un fichier ici ou cliquez',
+                    replace: 'Glissez-d&eacute;posez un fichier ou cliquez pour remplacer',
+                    remove:  'Supprimer',
+                    error:   'D&eacute;sol&eacute;, le fichier trop volumineux'
+                }	
+            });
+    </script>
+{% endblock %}

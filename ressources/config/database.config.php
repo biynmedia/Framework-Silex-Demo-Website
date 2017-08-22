@@ -21,7 +21,9 @@ $app->register(new IdiormServiceProvider(), array(
         'username' => 'root',
         'password' => '',
         'id_column_overrides' => array(
-            'view_articles' =>  'IDARTICLE'
+            'view_articles' =>  'IDARTICLE',
+            'article'       =>  'IDARTICLE',
+            'categorie'     =>  'IDCATEGORIE'
         )
     )
 ));

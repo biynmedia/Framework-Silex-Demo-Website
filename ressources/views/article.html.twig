@@ -3,6 +3,7 @@
 {# Block de title défini dans base.html.twig #}
 
     {% block title %} {{article.TITREARTICLE | capitalize}} {% endblock %}
+    {% set active = article.LIBELLECATEGORIE | capitalize %}
 
 {# Block de Contenu défini dans base.html.twig #}
 
@@ -23,6 +24,8 @@
                             </span>
                         </div>
 
+                        <p><img alt="{{ article.TITREARTICLE }}" src="{{ asset('assets/images/product/'~article.FEATUREDIMAGEARTICLE) }}"></p>
+                        
                         {{ article.CONTENUARTICLE | raw }}
 
                         <h5 class="text-right font-heading"><strong>{{ article.PRENOMAUTEUR }} {{ article.NOMAUTEUR }}</strong> </h5>

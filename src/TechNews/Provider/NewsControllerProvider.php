@@ -68,6 +68,11 @@ class NewsControllerProvider implements ControllerProviderInterface {
                 ->post('/inscription', 'TechNews\Controller\NewsController::inscriptionPost')
                 ->bind('technews_inscription_post');
             
+            # Traitement Ajax de la Newsletter
+            $controllers
+                ->post('/newsletter', 'TechNews\Controller\NewsController::newsletterAjax')
+                ->bind('newsletter_ajax');
+            
         # On retourne la liste des controllers (ControllerCollection)
         return $controllers;
         
