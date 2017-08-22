@@ -54,6 +54,7 @@ require PATH_RESSOURCES . '/config/database.config.php';
 require PATH_RESSOURCES . '/config/security.php';
 
 #9 : Gestion des Erreurs
+#  : https://gist.github.com/tournasdim/171b443065936bbb5ef3
 $app->error(function (\Exception $e) use ($app) {
     if ($e instanceof NotFoundHttpException) {
         return $app['twig']->render('erreur.html.twig', [
